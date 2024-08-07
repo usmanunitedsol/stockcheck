@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const Dashboard = () => {
+const Dashboard = ({data}) => {
   return (
     <div className='container'>
          <div className='p-8'>
@@ -77,4 +77,6 @@ const Dashboard = () => {
   )
 }
 
+
 export default Dashboard
+
