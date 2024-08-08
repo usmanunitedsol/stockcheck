@@ -3,7 +3,6 @@ import React from 'react'
 
 const Dashboard = ({products}) => {
 
-    console.log("daad",products)
   return (
     <div className='container'>
          <div className='p-8'>
@@ -62,10 +61,7 @@ const Dashboard = ({products}) => {
                              4
                             </td>
                             <td class="px-6 py-4">
-                               {
-                                products.map((product)=>product.variations.map((item)=>item.stock_quantity
-                                ))
-                               }
+                                6
                             </td>
                             <td class="px-6 py-4">
                                 6
