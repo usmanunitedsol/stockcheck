@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import React from 'react'
 
-const Dashboard = ({data}) => {
+const Dashboard = ({products}) => {
+
+    console.log("daad",products)
   return (
     <div className='container'>
          <div className='p-8'>
@@ -60,7 +62,10 @@ const Dashboard = ({data}) => {
                              4
                             </td>
                             <td class="px-6 py-4">
-                                6
+                               {
+                                products.map((product)=>product.variations.map((item)=>item.stock_quantity
+                                ))
+                               }
                             </td>
                             <td class="px-6 py-4">
                                 6
