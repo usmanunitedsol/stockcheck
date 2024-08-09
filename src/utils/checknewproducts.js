@@ -8,8 +8,8 @@ const api = new WooCommerceRestApi({
   version: "wc/v3"
 });
 
-const getmoreproducts =async (key) => {
-   console.log("key",key)
+const getmoreproducts =async (page) => {
+ 
 
   
     
@@ -32,7 +32,7 @@ const getmoreproducts =async (key) => {
   
     // Assume the API provides total pages in the response headers
     const totalPages = productsResponse.headers['x-wp-totalpages'] || 1;
-    console.log("new",productsWithVariations)
+    
     return {
      newpages : {
         products: productsWithVariations,
