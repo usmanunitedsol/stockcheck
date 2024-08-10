@@ -1,38 +1,16 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import Dashboard from "@/Components/Dashboard";
+import axios from 'axios';
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
-import axios from "axios";
-import handler from "./api/get-products";
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-import { useState } from "react";
 
-const queryClient = new QueryClient()
+const getnewproducts = async (searchTitle = '',page) => {
+  const api = new WooCommerceRestApi({
+    url: process.env.NEXT_PUBLIC_WOOCOMMERCE_BASE_URL,
+    consumerKey: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY,
+    consumerSecret: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET,
+    version: "wc/v3"
+  });
 
-
-const inter = Inter({ subsets: ["latin"] });
-
-const api = new WooCommerceRestApi({
-  url: process.env.NEXT_PUBLIC_WOOCOMMERCE_BASE_URL,
-  consumerKey: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY,
-  consumerSecret: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET,
-  version: "wc/v3"
-});
-
-export default function Home({newpages}) {
-
-
-  return (
-     <main>
-      <Dashboard {...newpages}  />
-     </main>
-  );
-}
-
-export async function getServerSideProps(context) {
-  const {page=1} = context.query
+  const productsResponse = await api.get(`products?search=${searchTitle}`);
   
-  const productsResponse = await api.get(`products?page=${page}&per_page=7`);
 
   // Fetch variations for each product with variations
 
@@ -80,7 +58,7 @@ export async function getServerSideProps(context) {
      
         shopify_products.push({
           wpProduct,
-           shopifyProduct: shopifyProduct || null,
+          shopifyProduct: shopifyProduct || null,
         });
       
     } catch (error) {
@@ -93,7 +71,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
     newpages : {
-      productsWithVariations, // This will contain the product name and their respective stock from both WooCommerce and Shopify
+    
       currentPage: parseInt(page, 10),
       totalPages: parseInt(productsResponse.headers['x-wp-totalpages'], 10) || 1,
       shopify_products,
@@ -101,4 +79,6 @@ export async function getServerSideProps(context) {
     }
     },
   };
-}
+};
+
+export default getnewproducts;

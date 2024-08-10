@@ -1,47 +1,21 @@
 import { useState } from 'react';
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
  
-const api = new WooCommerceRestApi({
-  url: process.env.NEXT_PUBLIC_WOOCOMMERCE_BASE_URL,
-  consumerKey: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY,
-  consumerSecret: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET,
-  version: "wc/v3"
-});
 
-const getmoreproducts =async (page) => {
+const getStockOfShopify = (name,shopify_prod) => {
  
 
-  
-    
-    const productsResponse = await api.get(`products?page=${page}&per_page=5`);
-  
-    // Fetch variations for each product with variations
-    const productsWithVariations = await Promise.all(
-      productsResponse?.data.map(async (product) => {
-        if (product.variations.length > 0) {
-          const { data: variations } = await api.get(`products/${product.id}/variations`, {
-            params: {
-              per_page: 50, // Adjust as needed
-            },
-          });
-          return { ...product, variations };
-        }
-        return product;
-      })
-    );
-  
-    // Assume the API provides total pages in the response headers
-    const totalPages = productsResponse.headers['x-wp-totalpages'] || 1;
-    
-    return {
-     newpages : {
-        products: productsWithVariations,
-        currentPage: parseInt(page, 10), // Convert page to an integer
-        totalPages: parseInt(totalPages, 10),
-       
-      },
-    };
+  const matchingVariant = shopify_prod?.variants?.find(variant => variant.title === name);
+
+  if (matchingVariant) {
+    // Return the inventory quantity of the matching variant
+    return matchingVariant.inventory_quantity;
+  }
+
+  // Return 0 if no matching variant is found
+  return 0;
   
 };
 
-export default getmoreproducts;
+export default getStockOfShopify;
+
