@@ -152,7 +152,7 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
 
            <div className='block_result flex gap-2 pt-5 justify-end'>
       
-           <button type="submit" class="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500" onClick={handleExportToExcel}>Export list</button>
+           <button type="submit" class="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500 primary_btn" onClick={handleExportToExcel}>Export list</button>
 
            </div>
 
@@ -210,10 +210,10 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
                     </tbody>
                 </table>
             </div>
-            <div className="pagination-controls flex py-5 justify-center gap-4">
+            <div className="pagination-controls flex py-5 justify-center gap-4 btns_block">
         {cpage > 1 && (
           <button
-            className="text-white bg-blue-500 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500"
+            className="text-white bg-blue-500 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500 primary_btn"
             onClick={() => handlePageChange(cpage - 1)}
           >
             Previous
@@ -221,7 +221,7 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
         )}
         {cpage < totalpages && (
           <button
-            className="text-white bg-blue-500 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500"
+            className="text-white bg-blue-500 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500 primary_btn"
             onClick={() => handlePageChange(cpage + 1)}
           >
             Next
