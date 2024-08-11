@@ -1,2 +1,12 @@
-.primary_btn{background-color: rgb(59 130 246 /0.5);}
+.primary_btn{background-color: rgb(59 130 246 /0.9);color: #fff; outline: none;font-size: 18px; line-height: 24px; padding: 20px; border-radius: 10px;}
 .btns_block{display: flex; gap: 40px; justify-content: center;}
+.main_container{max-width: 1400px; margin: auto;}
+.block_result{display: flex; gap: 10px; padding-top: 10px; justify-content: end;}
+.products_show{padding-top: 40px;}
+.table_outer{position: relative; overflow-x: auto;}
+.table_inner{width: 100%; font-size: 20px; line-height: 28px; text-align: left; color: black;}
+.tablehead{font-size: 16px; line-height: 24px; color: #808080; background-color: #fff;}
+.tablehead tr th{padding: 12px 24px;}
+tbody tr {background-color: #fff; }
+tbody tr  th{padding: 12px 24px; white-space: nowrap; }
+tbody tr  td{padding: 12px 24px;}

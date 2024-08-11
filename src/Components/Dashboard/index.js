@@ -119,7 +119,7 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
   };
 
   return (
-    <div className='container m-auto'>
+    <div className='main_container'>
          <div className='p-8'>
            {/* <div className='search_box'>    
            <form className="max-w-md mx-auto">
@@ -150,31 +150,31 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
           </form>
            </div> */}  
 
-           <div className='block_result flex gap-2 pt-5 justify-end'>
+           <div className='block_result '>
       
-           <button type="submit" class="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500 primary_btn" onClick={handleExportToExcel}>Export list</button>
+           <button type="submit" class="primary_btn" onClick={handleExportToExcel}>Export list</button>
 
            </div>
 
-          <div className='products_show pt-7'>                      
-            <div class="relative overflow-x-auto">
-                <table  id="products-table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <div className='products_show '>                      
+            <div class="table_outer ">
+                <table  id="products-table" class="table_inner">
+                    <thead class="tablehead">
                       
                         <tr>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="">
                                Title
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="">
                                 Variant Title
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="">
                                shopify stock
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="">
                                wordpress stock
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="">
                                 Total
                             </th>
                         </tr>
@@ -185,8 +185,8 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
                     {
              filterproducts &&    filterproducts.map((product) => {
                     return product.wpProduct.variations?.map((item) => (
-                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={item.id}>
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <tr className="" key={item.id}>
+                        <th scope="row" className="">
                           {product.wpProduct.name}
                         </th>
                         <td className="px-6 py-4">
@@ -210,10 +210,10 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
                     </tbody>
                 </table>
             </div>
-            <div className="pagination-controls flex py-5 justify-center gap-4 btns_block">
+            <div className="pagination-controls btns_block">
         {cpage > 1 && (
           <button
-            className="text-white bg-blue-500 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500 primary_btn"
+            className="primary_btn"
             onClick={() => handlePageChange(cpage - 1)}
           >
             Previous
@@ -221,7 +221,7 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
         )}
         {cpage < totalpages && (
           <button
-            className="text-white bg-blue-500 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500 primary_btn"
+            className=" primary_btn"
             onClick={() => handlePageChange(cpage + 1)}
           >
             Next
