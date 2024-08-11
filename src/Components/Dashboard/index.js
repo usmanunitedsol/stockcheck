@@ -6,6 +6,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import * as XLSX from 'xlsx';
+import axios from "axios";
 
 const Dashboard = ({ products , currentPage, totalPages,shopify_products,comparedProducts,productsWithVariations }) => {
   console.log("prodn",shopify_products)
@@ -13,28 +14,8 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
   const [loading, setLoading] = useState(false);
   const [filterproducts , setFilterproducts]= useState (shopify_products);
   const [searchQuery, setSearchQuery] = useState('');
-  const handleSearchChange = (event) => {
-    // setSearchQuery(event.target.value);
-  };
-
-  const handleSearchSubmit = (event) => {
-    // event.preventDefault();
-    // const filtered=    getnewproducts(searchQuery);
-    // const {shopify_products}= filtered
-    // setFilterproducts(shopify_products);
-  };
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     if (!searchQuery) {
-  //       // Fetch products based on the search query
-     
-  //       setFilterproducts(shopify_products);
-  //     } 
-  //   };
-
-  //   fetchProducts();
-  // }, [searchQuery, shopify_products]);
+  const [cpage,setcpage]=useState(currentPage)
+  const [totalpages,settotalpages]=useState(totalPages)
 
  
     // Helper function to convert ArrayBuffer to Base64
@@ -117,11 +98,30 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
       }
   };
 
+  const handlePageChange = async (newPage) => {
+    try {
+      setcpage(newPage);
+      
+      const response = await axios.get(`/api/get-products`, {
+        params: { page: newPage } // Pass the new page as a query parameter
+      });
+     
+      const { shopify_products, currentPage, totalPages } = response.data;
+  
+      setFilterproducts( response.data.shopify_products);
+      setcpage(response.data.currentPage);
+      settotalpages(response.data.totalPages);
+      console.log("res",filterproducts)
+    } catch (error) {
+      console.error("Error fetching new products:", error.message);
+    }
+  };
+
   return (
     <div className='container m-auto'>
          <div className='p-8'>
-           <div className='search_box'>    
-           <form onSubmit={handleSearchSubmit} className="max-w-md mx-auto">
+           {/* <div className='search_box'>    
+           <form className="max-w-md mx-auto">
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div className="relative">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -133,7 +133,7 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
                 type="search"
                 id="default-search"
                 value={searchQuery}
-                onChange={handleSearchChange}
+              
                 className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 outline-none"
                 placeholder="Search Product by Sku"
                 required
@@ -147,7 +147,7 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
               </button>
             </div>
           </form>
-           </div>
+           </div> */}
 
            <div className='block_result flex gap-2 pt-5 justify-end'>
       
@@ -182,7 +182,7 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
 
                     
                     {
-             filterproducts &&    shopify_products.map((product) => {
+             filterproducts &&    filterproducts.map((product) => {
                     return product.wpProduct.variations?.map((item) => (
                       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={item.id}>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -211,12 +211,12 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
             </div>
             <div className="pagination-controls flex py-5 justify-center gap-4">
                     {currentPage > 1 && (
-                        <Link  className="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500" href={`/?page=${currentPage - 1}`}>
+                        <Link  className="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500" href={`/?page=${cpage - 1}`} onClick={() => handlePageChange(cpage - 1)}>
                         Previous
                         </Link>
                     )}
-                    {currentPage < totalPages && (
-                        <Link    className="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500" href={`/?page=${currentPage + 1}`}>
+                    {currentPage < totalpages && (
+                        <Link    className="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500" href={`/?page=${cpage + 1}`} onClick={() => handlePageChange(cpage + 1)}>
                         Next
                         </Link>
                     )}

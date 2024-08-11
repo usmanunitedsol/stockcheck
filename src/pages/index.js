@@ -30,10 +30,10 @@ export default function Home({newpages}) {
 }
 
 export async function getServerSideProps(context) {
-  const { page = 1 } = context.query;
+  const  page = 1 
 
   // Increase per_page to reduce the number of requests
-  const perPage = 20;
+  const perPage = 5;
 
   // Fetch WooCommerce products in parallel with variations
   const productsResponse = await api.get(`products?page=${page}&per_page=${perPage}`);
