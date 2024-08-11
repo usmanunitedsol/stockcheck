@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     version: "wc/v3"
   });
 
-  const perPage = 20;
+  const perPage = 5;
 
   try {
     const productsResponse = await api.get(`products?page=${page}&per_page=${perPage}`);
