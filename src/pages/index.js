@@ -29,6 +29,7 @@ export default function Home({newpages}) {
   );
 }
 
+
 export async function getServerSideProps(context) {
   const  page = 1 
 

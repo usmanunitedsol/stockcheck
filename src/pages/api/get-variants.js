@@ -1,5 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
+export const config = {
+	maxDuration: 60,
+  };
 
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
 const api = new WooCommerceRestApi({

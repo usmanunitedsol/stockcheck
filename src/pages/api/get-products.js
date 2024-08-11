@@ -1,6 +1,8 @@
 import axios from 'axios';
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
-
+export const config = {
+	maxDuration: 60,
+  };
 export default async function handler(req, res) {
   const { page } = req.query; // Get the page number from query parameters
 
