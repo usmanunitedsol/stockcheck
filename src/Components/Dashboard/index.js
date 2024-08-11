@@ -7,14 +7,15 @@ import React, { useEffect, useState } from 'react'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import * as XLSX from 'xlsx';
 import axios from "axios";
-
+import { useRouter } from 'next/router';
 const Dashboard = ({ products , currentPage, totalPages,shopify_products,comparedProducts,productsWithVariations }) => {
   console.log("prodn",shopify_products)
-  
+  const router = useRouter();
+  const { query } = router;
   const [loading, setLoading] = useState(false);
   const [filterproducts , setFilterproducts]= useState (shopify_products);
   const [searchQuery, setSearchQuery] = useState('');
-  const [cpage,setcpage]=useState(currentPage)
+  const [cpage, setcpage] = useState(Number(query.page) || currentPage);
   const [totalpages,settotalpages]=useState(totalPages)
 
  
@@ -210,17 +211,23 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
                 </table>
             </div>
             <div className="pagination-controls flex py-5 justify-center gap-4">
-                    {currentPage > 1 && (
-                        <Link  className="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500" href={`/?page=${cpage - 1}`} onClick={() => handlePageChange(cpage - 1)}>
-                        Previous
-                        </Link>
-                    )}
-                    {currentPage < totalpages && (
-                        <Link    className="text-white  bg-blue-500 hover:bg-blue-500  focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500" href={`/?page=${cpage + 1}`} onClick={() => handlePageChange(cpage + 1)}>
-                        Next
-                        </Link>
-                    )}
-              </div>
+        {cpage > 1 && (
+          <button
+            className="text-white bg-blue-500 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500"
+            onClick={() => handlePageChange(cpage - 1)}
+          >
+            Previous
+          </button>
+        )}
+        {cpage < totalpages && (
+          <button
+            className="text-white bg-blue-500 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-500"
+            onClick={() => handlePageChange(cpage + 1)}
+          >
+            Next
+          </button>
+        )}
+      </div>
 
 
           </div>
