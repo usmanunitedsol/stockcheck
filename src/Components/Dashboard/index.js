@@ -148,7 +148,7 @@ const Dashboard = ({ products , currentPage, totalPages,shopify_products,compare
               </button>
             </div>
           </form>
-           </div> */}
+           </div> */}  
 
            <div className='block_result flex gap-2 pt-5 justify-end'>
       
